@@ -27,6 +27,7 @@
           <th>Last modified at</th>
           <th>Size</th>
           <th class="col-fit"></th>
+          <th class="col-fit"></th>
         </tr>
       </thead>
 
@@ -39,6 +40,11 @@
             <td class="col-fit">
               <@ui.buttonLink size="xs" to="${currentPath}/${file.name}">
                 <span class="glyphicon glyphicon-download"></span>
+              </@ui.buttonLink>
+            </td>
+            <td class="col-fit">
+              <@ui.buttonLink intent="danger" size="xs" to="${currentPath}/${file.name}">
+                <span class="glyphicon glyphicon-trash"></span>
               </@ui.buttonLink>
             </td>
           </tr>

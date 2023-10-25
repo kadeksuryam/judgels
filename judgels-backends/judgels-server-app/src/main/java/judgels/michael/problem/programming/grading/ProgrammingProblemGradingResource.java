@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -208,6 +209,22 @@ public class ProgrammingProblemGradingResource extends BaseProgrammingProblemRes
 
         String testDataFileUrl = programmingProblemStore.getGradingTestDataFileURL(actor.getUserJid(), problem.getJid(), filename);
         return ServiceUtils.buildDownloadResponse(testDataFileUrl);
+    }
+
+    @DELETE
+    @Path("/testdata/{filename}")
+    @UnitOfWork(readOnly = true)
+    public Response deleteGradingTestDataFile(
+            @Context HttpServletRequest req,
+            @PathParam("problemId") int problemId,
+            @PathParam("filename") String filename) {
+
+        Actor actor = actorChecker.check(req);
+        Problem problem = checkFound(problemStore.getProblemById(problemId));
+        checkAllowed(roleChecker.canView(actor, problem));
+
+        programmingProblemStore.deleteGradingTestDataFile(actor.getUserJid(), problem.getJid(), filename);
+        return redirect("/problems/programming/" + problemId + "/grading/testdata");
     }
 
     @GET

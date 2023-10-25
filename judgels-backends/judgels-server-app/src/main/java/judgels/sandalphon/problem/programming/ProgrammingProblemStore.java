@@ -123,6 +123,9 @@ public final class ProgrammingProblemStore extends BaseProblemStore {
         return problemFs.getPublicFileUrl(getGradingTestDataDirPath(userJid, problemJid).resolve(filename));
     }
 
+    public void deleteGradingTestDataFile(String userJid, String problemJid, String filename) {
+        problemFs.removeFile(getGradingTestDataDirPath(userJid, problemJid).resolve(filename));
+    }
 
     public String getGradingHelperFileURL(String userJid, String problemJid, String filename) {
         return problemFs.getPublicFileUrl(getGradingHelpersDirPath(userJid, problemJid).resolve(filename));
